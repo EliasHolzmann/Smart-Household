@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="Titel_Einkaufsliste_Hauptscreen">Einkaufsliste auswählen</string>
+    <string name="Einkaufslisten_Ueberschrift">Einkaufslisten</string>
+    <string name="Einkaufsliste_Ueberschrift">Einkaufslisten</string>
+    <string name="Neue_Einkaufsliste">Neue Einkaufsliste</string>
+    <string name="Wocheneinkauf_Art_Ueberschrift">Art</string>
+    <string name="Wocheneinkauf_Stueckzahl_Ueberschrift">Stückzahl</string>
+    <string name="Wocheneinkauf_Auswahl_Ueberschrift">Auswahl</string>
+    <string name="Button_Hinfufuegen">Hinzufügen</string>
+    <string name="Button_Speichern">Speichern</string>
+    <string name="MengeProPerson">Menge</string>
+    <string name="Name">Name</string>
+    <string name="Preis">Preis je Einheit in €</string>
+
+    <string-array name="planets_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
 </resources>

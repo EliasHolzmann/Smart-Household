@@ -5,10 +5,27 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".Einkaufsliste_Hauptscreen" >
+        <activity
+            android:name=".Einkaufsliste_Hauptscreen"
+            android:label="@string/Titel_Einkaufsliste_Hauptscreen" >
+        </activity>
+        <activity
+            android:name=".Wocheneinkauf"
+            android:label="Wocheneinkauf" >
+        </activity>
+        <activity
+            android:name=".Zutat_Hinzufuegen"
+            android:label="Zutat hinzufügen" >
+        </activity>
+        <activity android:name=".Hauptmenue"
+            android:label="Hauptmenü">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
