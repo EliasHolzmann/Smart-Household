@@ -33,7 +33,12 @@ public class MealAdapter extends ArrayAdapter<Meal> {
         TextView mealPrice = (TextView) convertView.findViewById(R.id.mealListPrice);
         // Populate the data into the template view using the data object
         mealName.setText(meal.name);
-        mealPrice.setText((meal.price / 100) + "," + (meal.price % 100) +  " €");
+        String euro = "" + meal.price / 100;
+        String cent = "" + meal.price % 100;
+        if (cent.length() == 1) {
+            cent = "0" + cent;
+        }
+        mealPrice.setText(euro + "," + cent +  " €");
         // Return the completed view to render on screen
         return convertView;
     }
