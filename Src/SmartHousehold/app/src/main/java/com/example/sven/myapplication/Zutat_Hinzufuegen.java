@@ -2,6 +2,7 @@ package com.example.sven.myapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -46,5 +47,15 @@ public class Zutat_Hinzufuegen extends AppCompatActivity {
         Spinner sItems2 = (Spinner) findViewById(R.id.spinner2);
         sItems2.setAdapter(adapter2);
 
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
