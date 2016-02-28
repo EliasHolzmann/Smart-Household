@@ -15,6 +15,7 @@
     <string name="Uebersicht">Übersicht</string>
     <string name="Einkaufsliste">Einkaufsliste</string>
     <string name="Kochbuch">Kochbuch</string>
+    <string name="loeschen">Löschen</string>
 
     <string-array name="planets_array">
         <item>Mercury</item>

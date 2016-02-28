@@ -1,16 +1,22 @@
 package com.example.sven.myapplication;
 
-import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SearchView;
+import android.widget.CursorAdapter;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 public class Einkaufsliste_Hauptscreen extends AppCompatActivity {
+
+    private SmartHouseholdOpenHandler openHandler;
+    private SmartHouseholdOpenHandler dbHandler;
+    private CursorAdapter ca;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +25,16 @@ public class Einkaufsliste_Hauptscreen extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        openHandler = new SmartHouseholdOpenHandler(this);
+        openHandler.insert("Test");
+
+        ca = new SmartHouseholdAdapter(this);
+        dbHandler = new SmartHouseholdOpenHandler(this);
+        ca.changeCursor(dbHandler.query());
+
+        ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setAdapter(ca);
 
         Button neueliste_button = (Button) findViewById(R.id.button);
 
