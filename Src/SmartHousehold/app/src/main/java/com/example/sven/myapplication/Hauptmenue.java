@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.sven.myapplication.kochbuch.Kochbuch;
 import com.microsoft.windowsazure.mobileservices.*;
 import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
@@ -80,7 +81,7 @@ public class Hauptmenue extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent myIntent = new Intent(Hauptmenue.this, Einkaufsliste_Hauptscreen.class);
+                Intent myIntent = new Intent(Hauptmenue.this, Kochbuch.class);
                 Hauptmenue.this.startActivity(myIntent);
 
             }
