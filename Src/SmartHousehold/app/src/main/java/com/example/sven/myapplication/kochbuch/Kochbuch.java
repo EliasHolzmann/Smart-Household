@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -31,6 +32,12 @@ public class Kochbuch extends AppCompatActivity {
 
         ArrayAdapter mealsAdapter = new MealAdapter(this, meals);
         ((ListView) findViewById(R.id.meals)).setAdapter(mealsAdapter);
+        ((ListView) findViewById(R.id.meals)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity((new Intent(getApplicationContext(), MealActivity.class)));
+            }
+        });
 
         ((Button) findViewById(R.id.buttonNewMeal)).setOnClickListener(new View.OnClickListener() {
             @Override

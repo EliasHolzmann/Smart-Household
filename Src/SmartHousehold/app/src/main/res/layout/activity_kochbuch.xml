@@ -24,6 +24,13 @@
         android:layout_height="match_parent"
         android:layout_above="@id/buttonNewMeal">
 
+        <SearchView
+            android:id="@+id/receiptSearch"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:iconifiedByDefault="false"
+            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

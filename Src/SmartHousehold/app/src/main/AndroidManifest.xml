@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.sven.myapplication" >
+    package="com.example.sven.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -29,6 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".kochbuch.NewReceipt" />
+        <activity android:name=".kochbuch.Kochbuch" />
+        <activity android:name=".kochbuch.NewStep" />
+        <activity android:name=".kochbuch.MealActivity"></activity>
     </application>
 
 </manifest>
