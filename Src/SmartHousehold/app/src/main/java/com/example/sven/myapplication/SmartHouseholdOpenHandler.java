@@ -13,6 +13,10 @@ import android.util.Log;
  */
 public class SmartHouseholdOpenHandler extends SQLiteOpenHelper {
 
+    /*
+    Exakt die selbe Funktionalität wie bei der EinkaufslisteOpenHandler.class
+     */
+
     private static final String TAG = SmartHouseholdOpenHandler.class.getSimpleName();
 
     //Name und Version der Datenbank
@@ -48,7 +52,7 @@ public class SmartHouseholdOpenHandler extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + _ID + " = " + id + ";");
     }
 
-    public void insert(String bezeichnung){
+    public long insert(String bezeichnung){
         long rowId = -1;
         try{
             //Datenbank öffnen
@@ -68,11 +72,26 @@ public class SmartHouseholdOpenHandler extends SQLiteOpenHelper {
         finally {
             Log.d(TAG, "insert(): rowID=" + rowId);
         }
+
+        return rowId;
     }
 
     public Cursor query() {
         SQLiteDatabase db = getWritableDatabase();
         return db.query(TABLE_NAME, null, null, null, null, null,
-                BEZEICHNUNG + " DESC");
+                _ID + " ASC");
+    }
+
+    public Cursor getEinkaufsliste(long id){
+        SQLiteDatabase db = getWritableDatabase();
+        String[] tableColumns = new String[] {BEZEICHNUNG};
+        String whereClause = _ID + "=?";
+        String[] whereArgs = new String[] {String.valueOf(id)};
+        return db.query(TABLE_NAME, tableColumns, whereClause, whereArgs, null, null, null);
+    }
+
+    public void updateEinkaufsliste(long id, String bezeichnung){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE " + TABLE_NAME + " SET " + BEZEICHNUNG + "='" + bezeichnung + "' WHERE " + _ID + "= " + id + ";");
     }
 }

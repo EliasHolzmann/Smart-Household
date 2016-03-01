@@ -2,6 +2,7 @@ package com.example.sven.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,10 @@ import android.widget.RelativeLayout;
 
 public class Einkaufsliste_Hauptscreen extends AppCompatActivity {
 
+    /*
+    Handler für die Datenbankconnection wird geöffnet
+     */
+
     private SmartHouseholdOpenHandler openHandler;
     private SmartHouseholdOpenHandler dbHandler;
     private CursorAdapter ca;
@@ -23,11 +28,16 @@ public class Einkaufsliste_Hauptscreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_einkaufsliste__hauptscreen);
 
+        /*
+        Return Button wird in die Action Bar hinzugefügt
+         */
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        openHandler = new SmartHouseholdOpenHandler(this);
-        openHandler.insert("Test");
+        /*
+        Der Adapter für die ListView wird erzeugt und über den Cursor mit Daten gefüllt
+         */
 
         ca = new SmartHouseholdAdapter(this);
         dbHandler = new SmartHouseholdOpenHandler(this);
@@ -42,13 +52,26 @@ public class Einkaufsliste_Hauptscreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                /*
+                Beim betätigen des Buttons um eine neue Einkaufsliste anzulegen wird ein insert Befehl auf die Tabelle
+                ausgeführt und auf eine neue Activity zum Bearbeiten genau dieser Einkaufsliste geöffnet
+                 */
+                openHandler = new SmartHouseholdOpenHandler(getApplicationContext());
+                long id = openHandler.insert("Unbenannte Liste");
+
                 Intent myIntent = new Intent(Einkaufsliste_Hauptscreen.this, Wocheneinkauf.class);
+                myIntent.putExtra("LISTENID", id);
+                myIntent.putExtra("BEZEICHNUNG", "Unbenannte Liste");
                 Einkaufsliste_Hauptscreen.this.startActivity(myIntent);
 
             }
         });
 
     }
+
+    /*
+    Funktion für den Return Button in der Actionbar
+     */
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -58,6 +81,22 @@ public class Einkaufsliste_Hauptscreen extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        /*
+        Update der Liste wenn zum Screen zurückgekehrt wird. Die Datenbankeinträge könnten sich geändert haben
+         */
+
+        ca = new SmartHouseholdAdapter(this);
+        dbHandler = new SmartHouseholdOpenHandler(this);
+        ca.changeCursor(dbHandler.query());
+
+        ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setAdapter(ca);
     }
 
 }

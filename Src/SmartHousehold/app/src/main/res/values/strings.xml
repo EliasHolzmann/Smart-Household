@@ -16,6 +16,7 @@
     <string name="Einkaufsliste">Einkaufsliste</string>
     <string name="Kochbuch">Kochbuch</string>
     <string name="loeschen">Löschen</string>
+    <string name="imWagen">im Wagen</string>
 
     <string-array name="planets_array">
         <item>Mercury</item>

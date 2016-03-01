@@ -35,7 +35,7 @@ public class Hauptmenue extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        TodoItem item = new TodoItem();
+        /*TodoItem item = new TodoItem();
         item.Text = "Awesome item";
 
         final TextView tv = (TextView) findViewById(R.id.textView7);
@@ -62,6 +62,8 @@ public class Hauptmenue extends AppCompatActivity {
         } catch (MobileServiceException e) {
             tv2.setText("Fehlgeschlagen");
         }
+
+        */
 
         Button einkaufsliste_button = (Button) findViewById(R.id.button5);
 
