@@ -1,14 +1,59 @@
 package com.example.sven.myapplication;
 
 /**
- * Created by User on 27.02.2016.
+ * Created by Sven on 03.03.2016.
  */
+public class ToDoItem {
 
-/*
-Hilfsklasse um die Connection zur externen Datenbank zu testen
- */
+    @com.google.gson.annotations.SerializedName("text")
+    private String mText;
 
-public class TodoItem {
-    public String Id;
-    public String Text;
+    @com.google.gson.annotations.SerializedName("id")
+    private String mId;
+
+    @com.google.gson.annotations.SerializedName("complete")
+    private boolean mComplete;
+
+    public ToDoItem() {
+
+    }
+
+    @Override
+    public String toString() {
+        return getText();
+    }
+
+    public ToDoItem(String text, String id) {
+        this.setText(text);
+        this.setId(id);
+    }
+
+    public String getText() {
+        return mText;
+    }
+
+    public final void setText(String text) {
+        mText = text;
+    }
+
+    public String getId() {
+        return mId;
+    }
+
+    public final void setId(String id) {
+        mId = id;
+    }
+
+    public boolean isComplete() {
+        return mComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        mComplete = complete;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof ToDoItem && ((ToDoItem) o).mId == mId;
+    }
 }

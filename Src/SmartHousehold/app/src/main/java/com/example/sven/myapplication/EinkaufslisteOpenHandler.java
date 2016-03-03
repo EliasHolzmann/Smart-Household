@@ -21,8 +21,8 @@ public class EinkaufslisteOpenHandler extends SQLiteOpenHelper {
     private static final String TAG = EinkaufslisteOpenHandler.class.getSimpleName();
 
     //Name und Version der Datenbank
-    private static final String DATABASE_NAME = "SmartHouseholdDatabase.db";
-    private static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "SmartHouseholdDatabase.db";
+    public static final int DATABASE_VERSION = 1;
 
     //Name und Attribute der Tabelle "Listen"
     public static final String _ID = "_id";
@@ -39,7 +39,7 @@ public class EinkaufslisteOpenHandler extends SQLiteOpenHelper {
     Beim ersten Aufruf der App muss die interne Datenbank sowie die Tabellen angelegt werden.
      */
 
-    private static final String TABLE_LISTEN_CREATE = "CREATE TABLE " + TABLE_NAME + " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+    private static final String TABLE_LISTEN_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + LISTENID + " INTEGER, " +
             BEZEICHNUNG + " VARCHAR(200), " +
             MENGE + " VARCHAR(200), " +

@@ -40,4 +40,27 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <EditText
+        android:id="@+id/textNewToDo"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="NoHint"
+        android:layout_below="@+id/button5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp">
+        <requestFocus />
+    </EditText>
+
+    <ListView
+        android:id="@+id/listViewToDo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/row_list_to_do"
+        android:padding="6dip"
+        android:layout_below="@+id/textNewToDo">
+
+    </ListView>
+
 </RelativeLayout>
