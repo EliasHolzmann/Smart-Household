@@ -56,6 +56,7 @@ public class Hauptmenue extends AppCompatActivity {
             createAndShowDialog(e, "Error");
         }
 
+        /*
         try {
             mClient = new MobileServiceClient(
                     "https://smarthousehold.azurewebsites.net",
@@ -76,6 +77,7 @@ public class Hauptmenue extends AppCompatActivity {
         } catch (Exception e){
             createAndShowDialog(e, "Error");
         }
+        */
 
         Button einkaufsliste_button = (Button) findViewById(R.id.button5);
 

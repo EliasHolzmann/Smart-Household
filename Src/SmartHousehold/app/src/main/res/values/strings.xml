@@ -12,20 +12,10 @@
     <string name="MengeProPerson">Menge</string>
     <string name="Name">Name</string>
     <string name="Preis">Preis je Einheit in €</string>
-    <string name="Uebersicht">Übersicht</string>
+    <string name="Uebersicht">SmartHousehold</string>
     <string name="Einkaufsliste">Einkaufsliste</string>
     <string name="Kochbuch">Kochbuch</string>
     <string name="loeschen">Löschen</string>
     <string name="imWagen">im Wagen</string>
 
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
 </resources>

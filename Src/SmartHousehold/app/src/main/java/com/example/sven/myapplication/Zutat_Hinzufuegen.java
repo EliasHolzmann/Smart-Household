@@ -52,6 +52,7 @@ public class Zutat_Hinzufuegen extends AppCompatActivity {
         spinnerArray2.add("pro mg");
         spinnerArray2.add("pro ml");
         spinnerArray2.add("pro l");
+        spinnerArray2.add("insgesamt");
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>( this, android.R.layout.simple_spinner_item, spinnerArray2);
 

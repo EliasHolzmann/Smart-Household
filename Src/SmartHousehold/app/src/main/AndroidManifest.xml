@@ -22,7 +22,7 @@
             android:label="Zutat hinzufügen" >
         </activity>
         <activity android:name=".Hauptmenue"
-            android:label="Hauptmenü">
+            android:label="Smart Household">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
