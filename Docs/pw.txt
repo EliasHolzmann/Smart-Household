@@ -1,0 +1,2 @@
+AdministratorSmartHousehold
+SmartHouseholdAdministratorPasswort12345
