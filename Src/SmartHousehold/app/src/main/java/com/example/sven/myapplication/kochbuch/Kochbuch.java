@@ -8,42 +8,52 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.sven.myapplication.R;
+import com.example.sven.myapplication.kochbuch.model.Database;
+import com.example.sven.myapplication.kochbuch.model.DatabaseMeal;
+import com.example.sven.myapplication.kochbuch.model.Meal;
 
 public class Kochbuch extends AppCompatActivity {
+
+    private static final String EXTRA_MEAL = "EXTRA_MEAL";
+    private static final int REQUEST_CODE_NEW_RECEIPT = 42;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kochbuch);
 
-        Meal meals[] = new Meal[10];
-        meals[0] = new Meal("Schnitzel", 240);
-        meals[1] = new Meal("Döner", 300);
-        meals[2] = new Meal("Pommes", 130);
-        meals[3] = new Meal("Cola", 150);
-        meals[4] = new Meal("Eiersalat", 80);
-        meals[5] = new Meal("Muscheln", 350);
-        meals[6] = new Meal("Sushi", 1200);
-        meals[7] = new Meal("Pizza", 150);
-        meals[8] = new Meal("Brot", 30);
-        meals[9] = new Meal("Nudeln", 80);
+        final DatabaseMeal meals[] = Database.getInstance().getMeals();
 
         ArrayAdapter mealsAdapter = new MealAdapter(this, meals);
         ((ListView) findViewById(R.id.meals)).setAdapter(mealsAdapter);
         ((ListView) findViewById(R.id.meals)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity((new Intent(getApplicationContext(), MealActivity.class)));
+                Intent intent = new Intent(getApplicationContext(), MealActivity.class);
+                intent.putExtra(MealActivity.EXTRA_MEAL_ID, meals[position].getId());
+                startActivity(intent);
             }
         });
 
         ((Button) findViewById(R.id.buttonNewMeal)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), NewReceipt.class));
+                startActivityForResult(new Intent(getApplicationContext(), NewReceipt.class), REQUEST_CODE_NEW_RECEIPT);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_NEW_RECEIPT) {
+            if (data == null) {
+                Toast.makeText(getApplicationContext(), "Rezept wurde NICHT gespeichert, bitte auf Speichern drücken.", Toast.LENGTH_LONG).show();
+                return;
+            }
+            Database.getInstance().newReceipt((Meal) data.getSerializableExtra(EXTRA_MEAL));
+        }
     }
 }

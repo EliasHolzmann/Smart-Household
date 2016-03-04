@@ -11,6 +11,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.sven.myapplication.R;
+import com.example.sven.myapplication.kochbuch.model.Ingredient;
+import com.example.sven.myapplication.kochbuch.model.Step;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewReceipt extends AppCompatActivity {
 
@@ -19,16 +24,14 @@ public class NewReceipt extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_receipt);
 
-        Ingredient ingredients[] = new Ingredient[3];
-        ingredients[0] = new Ingredient("200 g", "Mehl");
-        ingredients[1] = new Ingredient("500 g", "Hefe");
-        ingredients[2] = new Ingredient("2 l", "Wasser");
+
+        List<Ingredient> ingredientList = new ArrayList<Ingredient>();
 
         LinearLayout listIngredients = (LinearLayout) findViewById(R.id.listIngredients);
 
-        for (int i = 0; i < ingredients.length; i++) {
+        for (int i = 0; i < ingredientList.size(); i++) {
             final int finalI = i;
-            Ingredient ingredient = ingredients[i];
+            Ingredient ingredient = ingredientList.get(i);
             View element = getLayoutInflater().inflate(R.layout.ingredient_list_item, null);
             ((TextView) element.findViewById(R.id.ingredientListAmount)).setText(ingredient.amount);
             ((TextView) element.findViewById(R.id.ingredientListName)).setText(ingredient.name);
@@ -42,16 +45,13 @@ public class NewReceipt extends AppCompatActivity {
             listIngredients.addView(element);
         }
 
-        Step steps[] = new Step[3];
-        steps[0] = new Step("Ofen vorheizen", "Ofen auf 200° stellen");
-        steps[1] = new Step("Nudeln kochen", 540);
-        steps[2] = new Step("Geschnetzeltes anbraten", 830);
+        List<Step> stepList = new ArrayList<Step>();
 
         LinearLayout listSteps = (LinearLayout) findViewById(R.id.listSteps);
 
-        for (int i = 0; i < steps.length; i++) {
+        for (int i = 0; i < stepList.size(); i++) {
             final int finalI = i;
-            Step step = steps[i];
+            Step step = stepList.get(i);
             View element = getLayoutInflater().inflate(R.layout.step_list_item, null);
             String minutes = step.lengthSeconds / 60 + "";
             String seconds = step.lengthSeconds % 60 + "";

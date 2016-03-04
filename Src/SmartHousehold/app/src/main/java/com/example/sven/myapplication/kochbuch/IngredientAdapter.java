@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.sven.myapplication.R;
+import com.example.sven.myapplication.kochbuch.model.Ingredient;
 
 /**
  * Created by elias on 26.02.16.
