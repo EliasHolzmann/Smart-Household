@@ -7,17 +7,23 @@ import java.util.List;
 /**
  * Created by elias on 26.02.16.
  */
-public class LocalMeal extends Meal {
-    ArrayList<Step> steps = new ArrayList<Step>();
-    ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+public class LocalMeal extends Meal implements Serializable {
+    List<Step> steps = new ArrayList<Step>();
+    List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-    protected LocalMeal(String name) {
+    public LocalMeal(String name) {
         super(name);
+    }
+
+    public LocalMeal(String name, List<Step> steps, List<Ingredient> ingredients) {
+        super(name);
+        this.steps = steps;
+        this.ingredients = ingredients;
     }
 
     @Override
     public Step[] getSteps() {
-        return (Step[]) steps.toArray();
+        return steps.toArray(new Step[steps.size()]);
     }
 
     @Override
@@ -27,7 +33,7 @@ public class LocalMeal extends Meal {
 
     @Override
     public Ingredient[] getIngredients() {
-        return (Ingredient[]) ingredients.toArray();
+        return ingredients.toArray(new Ingredient[ingredients.size()]);
     }
 
     @Override

@@ -70,7 +70,7 @@ public class Zutat_Hinzufuegen extends AppCompatActivity {
                 Nach dem betätigen des Hinzufügen Buttons, wird der Datensatz hinzugefügt und in die Datenbank geschrieben
                  */
 
-                EditText name = (EditText) findViewById(R.id.editText);
+                EditText name = (EditText) findViewById(R.id.newReceiptName);
                 EditText menge = (EditText) findViewById(R.id.editText2);
                 EditText preis = (EditText) findViewById(R.id.editText3);
 

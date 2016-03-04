@@ -18,7 +18,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText"
+            android:id="@+id/newReceiptName"
             android:layout_gravity="center_horizontal"
             android:hint="Name" />
 
@@ -55,6 +55,12 @@
             android:layout_height="wrap_content"
             android:text="Schritt hinzufügen"
             android:id="@+id/newStepButton" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Speichern"
+            android:id="@+id/NewReceiptSave" />
 
     </LinearLayout>
 </ScrollView>

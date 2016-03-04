@@ -16,24 +16,23 @@ import com.example.sven.myapplication.kochbuch.model.DatabaseMeal;
 import com.example.sven.myapplication.kochbuch.model.Meal;
 
 public class Kochbuch extends AppCompatActivity {
+    private DatabaseMeal meals[];
 
-    private static final String EXTRA_MEAL = "EXTRA_MEAL";
-    private static final int REQUEST_CODE_NEW_RECEIPT = 42;
+    public static final String EXTRA_MEAL = "EXTRA_MEAL";
+    public static final int REQUEST_CODE_NEW_RECEIPT = 42;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kochbuch);
 
-        final DatabaseMeal meals[] = Database.getInstance().getMeals();
+        reloadMealsListView();
 
-        ArrayAdapter mealsAdapter = new MealAdapter(this, meals);
-        ((ListView) findViewById(R.id.meals)).setAdapter(mealsAdapter);
         ((ListView) findViewById(R.id.meals)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), MealActivity.class);
-                intent.putExtra(MealActivity.EXTRA_MEAL_ID, meals[position].getId());
+                intent.putExtra(com.example.sven.myapplication.kochbuch.CookingActivity.EXTRA_MEAL_ID, meals[position].getId());
                 startActivity(intent);
             }
         });
@@ -44,6 +43,18 @@ public class Kochbuch extends AppCompatActivity {
                 startActivityForResult(new Intent(getApplicationContext(), NewReceipt.class), REQUEST_CODE_NEW_RECEIPT);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        reloadMealsListView();
+    }
+
+    private void reloadMealsListView() {
+        meals = Database.getInstance().getMeals();
+        ArrayAdapter mealsAdapter = new MealAdapter(this, meals);
+        ((ListView) findViewById(R.id.meals)).setAdapter(mealsAdapter);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
         TextView ingredientAmount = (TextView) convertView.findViewById(R.id.ingredientListAmount);
         // Populate the data into the template view using the data object
         ingredientName.setText(ingredient.name);
-        ingredientAmount.setText(ingredient.amount);
+        ingredientAmount.setText(ingredient.amount + "");
         // Return the completed view to render on screen
         return convertView;
     }

@@ -8,20 +8,18 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".Einkaufsliste_Hauptscreen"
-            android:label="@string/Titel_Einkaufsliste_Hauptscreen" >
-        </activity>
+            android:label="@string/Titel_Einkaufsliste_Hauptscreen" />
         <activity
             android:name=".Wocheneinkauf"
-            android:label="Wocheneinkauf" >
-        </activity>
+            android:label="Wocheneinkauf" />
         <activity
             android:name=".Zutat_Hinzufuegen"
-            android:label="Zutat hinzufügen" >
-        </activity>
-        <activity android:name=".Hauptmenue"
+            android:label="Zutat hinzufügen" />
+        <activity
+            android:name=".Hauptmenue"
             android:label="Smart Household">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,14 +27,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".kochbuch.NewReceipt"
-            android:label="Neues Rezept"/>
-        <activity android:name=".kochbuch.Kochbuch"
-            android:label="Kochbuch"/>
-        <activity android:name=".kochbuch.NewStep"
-            android:label="Neuer Schritt"/>
-        <activity android:name=".kochbuch.MealActivity"
-            android:label="Mahlzeit"></activity>
+        <activity
+            android:name=".kochbuch.NewReceipt"
+            android:label="Neues Rezept" />
+        <activity
+            android:name=".kochbuch.Kochbuch"
+            android:label="Kochbuch" />
+        <activity
+            android:name=".kochbuch.NewStep"
+            android:label="Neuer Schritt" />
+        <activity
+            android:name=".kochbuch.CookingActivity" />
+        <activity android:name=".kochbuch.MealActivity" />
     </application>
 
 </manifest>

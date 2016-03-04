@@ -5,13 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.sven.myapplication.R;
 import com.example.sven.myapplication.kochbuch.model.Ingredient;
+import com.example.sven.myapplication.kochbuch.model.LocalMeal;
 import com.example.sven.myapplication.kochbuch.model.Step;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class NewReceipt extends AppCompatActivity {
         setContentView(R.layout.activity_new_receipt);
 
 
-        List<Ingredient> ingredientList = new ArrayList<Ingredient>();
+        final List<Ingredient> ingredientList = new ArrayList<Ingredient>();
 
         LinearLayout listIngredients = (LinearLayout) findViewById(R.id.listIngredients);
 
@@ -45,7 +44,7 @@ public class NewReceipt extends AppCompatActivity {
             listIngredients.addView(element);
         }
 
-        List<Step> stepList = new ArrayList<Step>();
+        final List<Step> stepList = new ArrayList<Step>();
 
         LinearLayout listSteps = (LinearLayout) findViewById(R.id.listSteps);
 
@@ -70,5 +69,15 @@ public class NewReceipt extends AppCompatActivity {
             });
             listSteps.addView(element);
         }
+
+        findViewById(R.id.NewReceiptSave).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra(Kochbuch.EXTRA_MEAL, new LocalMeal((((TextView) findViewById(R.id.newReceiptName)).getText().toString()), stepList, ingredientList));
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
     }
 }

@@ -8,7 +8,7 @@ import java.io.Serializable;
 public abstract class Meal implements Serializable {
     protected String name;
 
-    protected Meal(String name) {
+    public Meal(String name) {
         this.name = name;
     }
 
