@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.sven.myapplication.R;
 import com.example.sven.myapplication.kochbuch.model.Database;
 import com.example.sven.myapplication.kochbuch.model.DatabaseMeal;
+import com.example.sven.myapplication.kochbuch.model.LocalMeal;
 import com.example.sven.myapplication.kochbuch.model.Meal;
 
 public class Kochbuch extends AppCompatActivity {
@@ -43,6 +44,15 @@ public class Kochbuch extends AppCompatActivity {
                 startActivityForResult(new Intent(getApplicationContext(), NewReceipt.class), REQUEST_CODE_NEW_RECEIPT);
             }
         });
+
+        ((Button) findViewById(R.id.buttonNewMeal)).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Database.getInstance().flushDatabase();
+                reloadMealsListView();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -64,7 +74,7 @@ public class Kochbuch extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Rezept wurde NICHT gespeichert, bitte auf Speichern drücken.", Toast.LENGTH_LONG).show();
                 return;
             }
-            Database.getInstance().newReceipt((Meal) data.getSerializableExtra(EXTRA_MEAL));
+            Database.getInstance().newReceipt((LocalMeal) data.getSerializableExtra(EXTRA_MEAL));
         }
     }
 }

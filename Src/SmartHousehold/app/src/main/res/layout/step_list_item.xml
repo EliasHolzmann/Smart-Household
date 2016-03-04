@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/stepListLength"
@@ -21,6 +22,7 @@
         android:textAlignment="viewEnd"
         android:layout_gravity="end"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#000000" />
 
 </RelativeLayout>

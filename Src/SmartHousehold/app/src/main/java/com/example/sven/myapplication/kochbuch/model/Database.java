@@ -1,5 +1,7 @@
 package com.example.sven.myapplication.kochbuch.model;
 
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,6 +12,14 @@ import java.util.Map;
  * Created by elias on 03.03.16.
  */
 public class Database {
+/*
+ * Todo list
+ * add ability to add new/edit steps/ingredients in newReceipt activity
+ * remove reference to mealId 0 (currently breaks on Database.flushDatabase()
+ * talk with Sven about interface for communication with cart
+ * optional: make saved receipts editable
+ */
+
     private List<DatabaseMeal> meals = new ArrayList<DatabaseMeal>();
     private Map<Integer, List<Ingredient>> ingredientMap = new HashMap<Integer, List<Ingredient>>();
     private Map<Integer, List<Step>> stepMap = new HashMap<Integer, List<Step>>();
@@ -72,10 +82,35 @@ public class Database {
         throw new IllegalArgumentException("mealId " + mealId + " not registered");
     }
 
-    public void newReceipt(Meal meal) {
+    public void newReceipt(LocalMeal meal) {
         int id = (int) (Math.random() * 100000);      // Well, id calculation is a little dirty, but it's only mockup, so who cares?
         meals.add(new DatabaseMeal(id, meal.getName()));
         stepMap.put(id, new ArrayList<Step>(Arrays.asList(meal.getSteps())));
         ingredientMap.put(id, new ArrayList<Ingredient>(Arrays.asList(meal.getIngredients())));
+    }
+
+    public void flushDatabase() {
+        // flushing part
+        meals = new ArrayList<DatabaseMeal>();
+        ingredientMap = new HashMap<Integer, List<Ingredient>>();
+        stepMap = new HashMap<Integer, List<Step>>();
+
+        // refilling part
+        for (int mealCounter = 0; mealCounter < 20; mealCounter++) {
+            List<Ingredient> ingredient = new ArrayList<>();
+            ingredient.add(new Ingredient(200, 1, "Speck", 150, 2));
+            ingredient.add(new Ingredient(500, 1, "Nudeln", 125, 2));
+            ingredient.add(new Ingredient(5, 4, "Wasser", 0, 4));
+            ingredient.add(new Ingredient(2, 0, "Eier", 25, 0));
+            ingredient.add(new Ingredient(150, 1, "Parmesan", 1500, 2));
+            ingredient.add(new Ingredient(150, 4, "Sahne", 80, 4));
+
+            List<Step> step = new ArrayList<>();
+            for (int i = 0; i < 4; i++) {
+                step.add(new Step("Bla", "Bla bla bla", 150));
+            }
+
+            newReceipt(new LocalMeal("Carbonara", step, ingredient));
+        }
     }
 }
