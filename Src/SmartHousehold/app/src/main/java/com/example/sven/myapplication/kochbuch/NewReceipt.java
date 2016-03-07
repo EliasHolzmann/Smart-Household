@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewReceipt extends AppCompatActivity {
+    public static final String EXTRA_INGREDIENT = "EXTRA_INGREDIENT";
+    private static final int REQUEST_ADD_INGREDIENT = 2;
     private List<Step> stepArray;
     private List<Ingredient> ingredientArray;
 
@@ -52,6 +54,13 @@ public class NewReceipt extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(getApplicationContext(), NewStep.class), REQUEST_ADD_STEP);
+            }
+        });
+
+        findViewById(R.id.newIngredientButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getApplicationContext(), NewIngredient.class), REQUEST_ADD_INGREDIENT);
             }
         });
 
@@ -86,6 +95,14 @@ public class NewReceipt extends AppCompatActivity {
             Step step = (Step) data.getSerializableExtra(EXTRA_STEP);
             stepArray.add(step);
             ((ListView) findViewById(R.id.listSteps)).setAdapter(new StepAdapter(getApplicationContext(), stepArray));
+        } else if (requestCode == REQUEST_ADD_INGREDIENT) {
+            if (data == null) {
+                Toast.makeText(getApplicationContext(), "Zutat wurde NICHT gespeichert, bitte auf Speichern drücken.", Toast.LENGTH_LONG).show();
+                return;
+            }
+            Ingredient ingredient = (Ingredient) data.getSerializableExtra(EXTRA_INGREDIENT);
+            ingredientArray.add(ingredient);
+            ((ListView) findViewById(R.id.listIngredients)).setAdapter(new IngredientAdapter(getApplicationContext(), ingredientArray));
         }
     }
 
