@@ -7,11 +7,11 @@ import java.io.Serializable;
  */
 public class Ingredient implements Serializable {
     public final int amount;
-    public final int amountType;
+    public final String amountType;
     public final String name;
     public final int price;
-    public final int priceType;
-    public Ingredient(int amount, int amountType, String name, int price, int priceType) {
+    public final String priceType;
+    public Ingredient(int amount, String amountType, String name, int price, String priceType) {
         this.amount = amount;
         this.amountType = amountType;
         this.name = name;

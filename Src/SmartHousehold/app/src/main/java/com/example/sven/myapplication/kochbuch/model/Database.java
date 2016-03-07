@@ -42,7 +42,7 @@ public class Database {
 
             List<Ingredient> ingredientList = new ArrayList<Ingredient>();
             for (int j = 0; j < 3; j++) {
-                ingredientList.add(new Ingredient(100 * i, 1, "Blaubeeren " + i, 90 * i, 1));
+                ingredientList.add(new Ingredient(100 * i, "g", "Blaubeeren " + i, 90 * i, "g"));
             }
             ingredientMap.put(i, ingredientList);
         }
@@ -110,12 +110,12 @@ public class Database {
         // refilling part
         for (int mealCounter = 0; mealCounter < 20; mealCounter++) {
             List<Ingredient> ingredient = new ArrayList<>();
-            ingredient.add(new Ingredient(200, 1, "Speck", 150, 2));
-            ingredient.add(new Ingredient(500, 1, "Nudeln", 125, 2));
-            ingredient.add(new Ingredient(5, 4, "Wasser", 0, 4));
-            ingredient.add(new Ingredient(2, 0, "Eier", 25, 0));
-            ingredient.add(new Ingredient(150, 1, "Parmesan", 1500, 2));
-            ingredient.add(new Ingredient(150, 4, "Sahne", 80, 4));
+            ingredient.add(new Ingredient(200, "g", "Speck", 150, "g"));
+            ingredient.add(new Ingredient(500, "g", "Nudeln", 125, "g"));
+            ingredient.add(new Ingredient(5, "l", "Wasser", 0, "l"));
+            ingredient.add(new Ingredient(2, "Stck", "Eier", 25, "stck"));
+            ingredient.add(new Ingredient(150, "g", "Parmesan", 1500, "ml"));
+            ingredient.add(new Ingredient(150, "ml", "Sahne", 80, "ml"));
 
             List<Step> step = new ArrayList<>();
             for (int i = 0; i < 4; i++) {
