@@ -36,6 +36,7 @@ public class CookingActivity extends AppCompatActivity {
         }
 
         Meal meal = Database.getInstance().getMeal(mealId);
+        setTitle(meal.getName());
         steps = meal.getSteps();
 
         if (steps.length == 0) {

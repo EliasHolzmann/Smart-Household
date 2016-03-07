@@ -52,6 +52,18 @@ public class Database {
         return meals.toArray(new DatabaseMeal[meals.size()]);
     }
 
+    public DatabaseMeal[] getMeals(String searchString) {
+        ArrayList<DatabaseMeal> returner = new ArrayList<>();
+
+        for (DatabaseMeal meal : meals) {
+            if (meal.getName().contains(searchString)) {
+                returner.add(meal);
+            }
+        }
+
+        return returner.toArray(new DatabaseMeal[returner.size()]);
+    }
+
     protected Step[] getSteps(DatabaseMeal meal) {
         return stepMap.get(meal.id).toArray(new Step[stepMap.get(meal.id).size()]);
     }

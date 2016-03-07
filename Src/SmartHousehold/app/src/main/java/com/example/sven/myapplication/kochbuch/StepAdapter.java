@@ -10,12 +10,17 @@ import android.widget.TextView;
 import com.example.sven.myapplication.R;
 import com.example.sven.myapplication.kochbuch.model.Step;
 
+import java.util.List;
+
 /**
  * Created by elias on 26.02.16.
  */
 public class StepAdapter extends ArrayAdapter<Step> {
-
     public StepAdapter(Context context, Step[] meal) {
+        super(context, 0, meal);
+    }
+
+    public StepAdapter(Context context, List<Step> meal) {
         super(context, 0, meal);
     }
 

@@ -10,12 +10,18 @@ import android.widget.TextView;
 import com.example.sven.myapplication.R;
 import com.example.sven.myapplication.kochbuch.model.Ingredient;
 
+import java.util.List;
+
 /**
  * Created by elias on 26.02.16.
  */
 public class IngredientAdapter extends ArrayAdapter<Ingredient> {
 
     public IngredientAdapter(Context context, Ingredient[] ingredient) {
+        super(context, 0, ingredient);
+    }
+
+    public IngredientAdapter(Context context, List<Ingredient> ingredient) {
         super(context, 0, ingredient);
     }
 

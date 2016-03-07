@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,69 +8,72 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.sven.myapplication.kochbuch.NewStep">
+    tools:context="com.example.sven.myapplication.kochbuch.NewStep"
+    android:scrollbars="vertical">
+    <ScrollView
+        android:layout_above="@+id/newStepSaveButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/newStepTitle"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:hint="Beschreibung" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/newStepTitle"
+                android:hint="Beschreibung" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/newStepDescription"
-        android:layout_below="@+id/newStepTitle"
-        android:layout_centerHorizontal="true"
-        android:hint="Beschreibung" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/newStepDescription"
+                android:hint="NewStepDescription" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Timer"
-        android:id="@+id/checkBox"
-        android:layout_below="@+id/newStepDescription"
-        android:layout_centerHorizontal="true" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Timer"
+                android:id="@+id/newStepTimerCheckbox"
+                android:textAlignment="center"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/checkBox"
-        android:layout_centerHorizontal="true">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="2"
-            android:id="@+id/minutes"
-            android:hint="min" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="2"
+                    android:id="@+id/newStepMinutes"
+                    android:hint="min" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text=":" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=":" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="2"
-            android:id="@+id/seconds"
-            android:hint="sec" />
-    </LinearLayout>
-
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="2"
+                    android:id="@+id/newStepSeconds"
+                    android:hint="sec" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Speichern"
-        android:id="@+id/button"
+        android:id="@+id/newStepSaveButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 

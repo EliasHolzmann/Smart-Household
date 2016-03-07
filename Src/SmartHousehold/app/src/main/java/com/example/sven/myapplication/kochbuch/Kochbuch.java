@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.sven.myapplication.R;
@@ -16,8 +17,12 @@ import com.example.sven.myapplication.kochbuch.model.DatabaseMeal;
 import com.example.sven.myapplication.kochbuch.model.LocalMeal;
 import com.example.sven.myapplication.kochbuch.model.Meal;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Kochbuch extends AppCompatActivity {
-    private DatabaseMeal meals[];
+    private List<DatabaseMeal> meals = new ArrayList<>();
 
     public static final String EXTRA_MEAL = "EXTRA_MEAL";
     public static final int REQUEST_CODE_NEW_RECEIPT = 42;
@@ -33,7 +38,7 @@ public class Kochbuch extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), MealActivity.class);
-                intent.putExtra(com.example.sven.myapplication.kochbuch.CookingActivity.EXTRA_MEAL_ID, meals[position].getId());
+                intent.putExtra(com.example.sven.myapplication.kochbuch.CookingActivity.EXTRA_MEAL_ID, meals.get(position).getId());
                 startActivity(intent);
             }
         });
@@ -53,6 +58,19 @@ public class Kochbuch extends AppCompatActivity {
                 return true;
             }
         });
+
+        ((SearchView) findViewById(R.id.receiptSearch)).setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                reloadMealsListView();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -62,8 +80,14 @@ public class Kochbuch extends AppCompatActivity {
     }
 
     private void reloadMealsListView() {
-        meals = Database.getInstance().getMeals();
-        ArrayAdapter mealsAdapter = new MealAdapter(this, meals);
+        if (((SearchView) findViewById(R.id.receiptSearch)).getQuery().length() == 0) {
+            meals.clear();
+            meals.addAll(Arrays.asList(Database.getInstance().getMeals()));
+        } else {
+            meals.clear();
+            meals.addAll(Arrays.asList(Database.getInstance().getMeals(((SearchView) findViewById(R.id.receiptSearch)).getQuery().toString())));
+        }
+        ArrayAdapter mealsAdapter = new MealAdapter(getApplicationContext(), meals);
         ((ListView) findViewById(R.id.meals)).setAdapter(mealsAdapter);
     }
 

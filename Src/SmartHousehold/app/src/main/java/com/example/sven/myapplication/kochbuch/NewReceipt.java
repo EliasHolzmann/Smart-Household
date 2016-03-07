@@ -10,19 +10,24 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sven.myapplication.R;
 import com.example.sven.myapplication.kochbuch.model.Database;
 import com.example.sven.myapplication.kochbuch.model.Ingredient;
 import com.example.sven.myapplication.kochbuch.model.LocalMeal;
+import com.example.sven.myapplication.kochbuch.model.Meal;
 import com.example.sven.myapplication.kochbuch.model.Step;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewReceipt extends AppCompatActivity {
-    private Step[] stepArray;
-    private Ingredient[] ingredientArray;
+    private List<Step> stepArray;
+    private List<Ingredient> ingredientArray;
+
+    public static final int REQUEST_ADD_STEP = 1;
+    public static final String EXTRA_STEP = "EXTRA_STEP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +37,8 @@ public class NewReceipt extends AppCompatActivity {
 
         final List<Ingredient> ingredientList = new ArrayList<Ingredient>();
 
-        stepArray = Database.getInstance().getMeal(0).getSteps();
-        ingredientArray = Database.getInstance().getMeal(0).getIngredients();
+        stepArray = new ArrayList<>();
+        ingredientArray = new ArrayList<>();
 
         ((ListView) findViewById(R.id.listIngredients)).setAdapter(new IngredientAdapter(getApplicationContext(), ingredientArray));
         ((ListView) findViewById(R.id.listSteps)).setAdapter(new StepAdapter(getApplicationContext(), stepArray));
@@ -42,6 +47,46 @@ public class NewReceipt extends AppCompatActivity {
         ListUtils.resizeListViewToMatchFullHeight(((ListView) findViewById(R.id.listIngredients)));
 
         final List<Step> stepList = new ArrayList<Step>();
+
+        findViewById(R.id.newStepButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getApplicationContext(), NewStep.class), REQUEST_ADD_STEP);
+            }
+        });
+
+        findViewById(R.id.newReceiptSave).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Meal meal = new LocalMeal(((TextView) findViewById(R.id.newReceiptName)).getText().toString());
+                for (Step step : stepArray) {
+                    meal.addStep(step);
+                }
+
+                for (Ingredient ingredient : ingredientArray) {
+                    meal.addIngredient(ingredient);
+                }
+                Intent returner = new Intent();
+                returner.putExtra(Kochbuch.EXTRA_MEAL, meal);
+                setResult(RESULT_OK, returner);
+
+                finish();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_ADD_STEP) {
+            if (data == null) {
+                Toast.makeText(getApplicationContext(), "Schritt wurde NICHT gespeichert, bitte auf Speichern drücken.", Toast.LENGTH_LONG).show();
+                return;
+            }
+            Step step = (Step) data.getSerializableExtra(EXTRA_STEP);
+            stepArray.add(step);
+            ((ListView) findViewById(R.id.listSteps)).setAdapter(new StepAdapter(getApplicationContext(), stepArray));
+        }
     }
 
     public static class ListUtils {
