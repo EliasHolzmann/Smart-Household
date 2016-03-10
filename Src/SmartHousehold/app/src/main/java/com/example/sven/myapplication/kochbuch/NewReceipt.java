@@ -3,10 +3,8 @@ package com.example.sven.myapplication.kochbuch;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +17,7 @@ import com.example.sven.myapplication.kochbuch.model.LocalMeal;
 import com.example.sven.myapplication.kochbuch.model.Meal;
 import com.example.sven.myapplication.kochbuch.model.Step;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +72,11 @@ public class NewReceipt extends AppCompatActivity {
                 }
 
                 for (Ingredient ingredient : ingredientArray) {
-                    meal.addIngredient(ingredient);
+                    try {
+                        meal.addIngredient(ingredient);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 Intent returner = new Intent();
                 returner.putExtra(Kochbuch.EXTRA_MEAL, meal);

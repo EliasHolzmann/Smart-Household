@@ -17,6 +17,7 @@ import com.example.sven.myapplication.kochbuch.model.DatabaseMeal;
 import com.example.sven.myapplication.kochbuch.model.LocalMeal;
 import com.example.sven.myapplication.kochbuch.model.Meal;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -98,7 +99,11 @@ public class Kochbuch extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Rezept wurde NICHT gespeichert, bitte auf Speichern drücken.", Toast.LENGTH_LONG).show();
                 return;
             }
-            Database.getInstance().newReceipt((LocalMeal) data.getSerializableExtra(EXTRA_MEAL));
+            try {
+                Database.getInstance().newReceipt((LocalMeal) data.getSerializableExtra(EXTRA_MEAL));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

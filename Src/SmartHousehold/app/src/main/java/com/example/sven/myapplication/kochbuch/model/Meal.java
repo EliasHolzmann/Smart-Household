@@ -1,5 +1,8 @@
 package com.example.sven.myapplication.kochbuch.model;
 
+import android.util.JsonWriter;
+
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -24,5 +27,28 @@ public abstract class Meal implements Serializable {
     public abstract Step[] getSteps();
     public abstract void addStep(Step step);
     public abstract Ingredient[] getIngredients();
-    public abstract void addIngredient(Ingredient ingredient);
+    public abstract void addIngredient(Ingredient ingredient) throws IOException;
+
+    public void writeToJson(JsonWriter jsonWriter) throws IOException {
+        jsonWriter.beginObject();
+
+        jsonWriter.name("name");
+        jsonWriter.value(getName());
+
+        jsonWriter.name("ingredients");
+        jsonWriter.beginArray();
+        for (Ingredient ingredient : getIngredients()) {
+            ingredient.writeToJson(jsonWriter);
+        }
+        jsonWriter.endArray();
+
+        jsonWriter.name("steps");
+        jsonWriter.beginArray();
+        for (Step step : getSteps()) {
+            step.writeToJson(jsonWriter);
+        }
+        jsonWriter.endArray();
+
+        jsonWriter.endObject();
+    }
 }

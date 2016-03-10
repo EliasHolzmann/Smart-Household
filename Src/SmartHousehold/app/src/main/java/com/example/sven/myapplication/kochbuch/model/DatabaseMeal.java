@@ -1,21 +1,51 @@
 package com.example.sven.myapplication.kochbuch.model;
 
+import android.util.JsonReader;
+
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
  * Created by elias on 26.02.16.
  */
 public class DatabaseMeal extends Meal implements Serializable {
-    protected int id;
-    protected String name;
-    protected int price;
+    protected String id;
 
-    protected DatabaseMeal(int id, String name) {
+    protected DatabaseMeal(String id, String name) {
         super(name);
         this.id = id;
     }
 
-    public int getId() {
+    protected static DatabaseMeal buildMealFromJson(JsonReader jsonReader) throws IOException {
+        String id = null;
+        String name = "";
+
+        jsonReader.beginObject();
+
+        while (jsonReader.hasNext()) {
+            String propertyName = jsonReader.nextName();
+
+            switch (propertyName) {
+                case "_id":
+                    id = jsonReader.nextString();
+                    break;
+                case "name":
+                    name = jsonReader.nextString();
+                    break;
+                default:
+                    jsonReader.skipValue();
+                    break;
+            }
+        }
+
+        jsonReader.endObject();
+
+        assert(id != null);
+
+        return new DatabaseMeal(id, name);
+    }
+
+    public String getId() {
         return id;
     }
 
@@ -36,7 +66,7 @@ public class DatabaseMeal extends Meal implements Serializable {
         return Database.getInstance().getIngredients(this);
     }
 
-    public void addIngredient(Ingredient ingredient) {
+    public void addIngredient(Ingredient ingredient) throws IOException {
         Database.getInstance().addIngredient(this, ingredient);
     }
 }

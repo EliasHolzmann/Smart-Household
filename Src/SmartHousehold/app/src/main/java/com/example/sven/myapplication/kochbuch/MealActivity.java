@@ -19,8 +19,8 @@ public class MealActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal);
 
-        final int mealId = getIntent().getIntExtra(CookingActivity.EXTRA_MEAL_ID, -1);
-        if (mealId == -1) {
+        final String mealId = getIntent().getStringExtra(CookingActivity.EXTRA_MEAL_ID);
+        if (mealId == null) {
             throw new RuntimeException("MealActivity must be started with extra EXTRA_MEAL_ID");
         }
 

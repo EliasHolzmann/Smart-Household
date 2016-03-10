@@ -1,9 +1,18 @@
 package com.example.sven.myapplication.kochbuch.model;
 
-import android.widget.Toast;
+import android.os.StrictMode;
+import android.util.JsonReader;
+import android.util.JsonWriter;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +30,8 @@ public class Database {
  */
 
     private List<DatabaseMeal> meals = new ArrayList<DatabaseMeal>();
-    private Map<Integer, List<Ingredient>> ingredientMap = new HashMap<Integer, List<Ingredient>>();
-    private Map<Integer, List<Step>> stepMap = new HashMap<Integer, List<Step>>();
+    private Map<String, List<Ingredient>> ingredientMap = new HashMap<String, List<Ingredient>>();
+    private Map<String, List<Step>> stepMap = new HashMap<String, List<Step>>();
 
     private static Database ourInstance = new Database();
 
@@ -31,98 +40,247 @@ public class Database {
     }
 
     private Database() {
-        for (int i = 0; i < 10; i++) {
-            meals.add(new DatabaseMeal(i, "Testessen " + i));
-
-            List<Step> stepList = new ArrayList<Step>();
-            for (int j = 0; j < 3; j++) {
-                stepList.add(new Step("Schrittname " + j, "MealID " + i, (j == 1) ? -1 : 60));
-            }
-            stepMap.put(i, stepList);
-
-            List<Ingredient> ingredientList = new ArrayList<Ingredient>();
-            for (int j = 0; j < 3; j++) {
-                ingredientList.add(new Ingredient(100 * i, "g", "Blaubeeren " + i, 90 * i, "g"));
-            }
-            ingredientMap.put(i, ingredientList);
-        }
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     public DatabaseMeal[] getMeals() {
-        return meals.toArray(new DatabaseMeal[meals.size()]);
+        URL url;
+        try {
+            url = new URL("http://8xw9x6dayy2cc9sl.myfritz.net/recipe");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        HttpURLConnection urlConnection;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            JsonReader jsonReader = new JsonReader(new InputStreamReader(urlConnection.getInputStream()));
+
+            List<DatabaseMeal> meals = new ArrayList<>();
+            jsonReader.beginArray();
+            while (jsonReader.hasNext()) {
+                meals.add(DatabaseMeal.buildMealFromJson(jsonReader));
+            }
+
+            return meals.toArray(new DatabaseMeal[meals.size()]);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+            //return new DatabaseMeal[]{};
+        }
     }
 
     public DatabaseMeal[] getMeals(String searchString) {
-        ArrayList<DatabaseMeal> returner = new ArrayList<>();
 
-        for (DatabaseMeal meal : meals) {
-            if (meal.getName().contains(searchString)) {
-                returner.add(meal);
-            }
+        URL url;
+        try {
+            url = new URL("http://8xw9x6dayy2cc9sl.myfritz.net/recipe");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
         }
 
-        return returner.toArray(new DatabaseMeal[returner.size()]);
+        HttpURLConnection urlConnection;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            JsonReader jsonReader = new JsonReader(new InputStreamReader(urlConnection.getInputStream()));
+
+            List<DatabaseMeal> meals = new ArrayList<>();
+            jsonReader.beginArray();
+            while (jsonReader.hasNext()) {
+                meals.add(DatabaseMeal.buildMealFromJson(jsonReader));
+            }
+
+            return meals.toArray(new DatabaseMeal[meals.size()]);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+            //return new DatabaseMeal[]{};
+        }
     }
 
     protected Step[] getSteps(DatabaseMeal meal) {
-        return stepMap.get(meal.id).toArray(new Step[stepMap.get(meal.id).size()]);
+
+        URL url;
+        try {
+            url = new URL("http://8xw9x6dayy2cc9sl.myfritz.net/recipe/" + meal.id);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        HttpURLConnection urlConnection;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            JsonReader jsonReader = new JsonReader(new InputStreamReader(urlConnection.getInputStream()));
+
+            List<Step> steps = new ArrayList<>();
+            jsonReader.beginObject();
+            while (jsonReader.hasNext()) {
+                String str = jsonReader.nextName();
+                if (!str.equals("steps")) {
+                    jsonReader.skipValue();
+                    continue;
+                }
+
+                jsonReader.beginArray();
+                while (jsonReader.hasNext()) {
+                    steps.add(Step.buildFromJson(jsonReader));
+                }
+                jsonReader.endArray();
+            }
+            jsonReader.endObject();
+
+            return steps.toArray(new Step[steps.size()]);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+            //return new DatabaseMeal[]{};
+        }
     }
 
     protected Ingredient[] getIngredients(DatabaseMeal meal) {
-        return ingredientMap.get(meal.id).toArray(new Ingredient[ingredientMap.get(meal.id).size()]);
+
+        URL url;
+        try {
+            url = new URL("http://8xw9x6dayy2cc9sl.myfritz.net/recipe/" + meal.id);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        HttpURLConnection urlConnection;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            JsonReader jsonReader = new JsonReader(new InputStreamReader(urlConnection.getInputStream()));
+
+            List<Ingredient> ingredients = new ArrayList<>();
+            jsonReader.beginObject();
+            while (jsonReader.hasNext()) {
+                String str = jsonReader.nextName();
+                if (!str.equals("ingredients")) {
+                    jsonReader.skipValue();
+                    continue;
+                }
+
+                jsonReader.beginArray();
+                while (jsonReader.hasNext()) {
+                    ingredients.add(Ingredient.buildFromJson(jsonReader));
+                }
+                jsonReader.endArray();
+            }
+            jsonReader.endObject();
+
+            return ingredients.toArray(new Ingredient[ingredients.size()]);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+            //return new DatabaseMeal[]{};
+        }
     }
 
     protected void addStep(DatabaseMeal meal, Step step) {
-        stepMap.get(meal.id).add(step);
+        throw new RuntimeException("Not yet implemented");
     }
 
-    protected void addIngredient(DatabaseMeal meal, Ingredient ingredient) {
-        ingredientMap.get(meal.id).add(ingredient);
+    protected void addIngredient(DatabaseMeal meal, Ingredient ingredient) throws IOException {
+        StringWriter stringWriter = new StringWriter();
+        JsonWriter jsonWriter = new JsonWriter(new BufferedWriter(stringWriter));
+        ingredient.writeToJson(jsonWriter);
+        jsonWriter.flush();
+
+
+        URL url;
+        try {
+            url = new URL("http://8xw9x6dayy2cc9sl.myfritz.net/recipe/" + meal.id + "/add/ingredient");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        HttpURLConnection urlConnection;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+
+            urlConnection.setDoOutput(true);
+            urlConnection.setChunkedStreamingMode(0);
+
+            PrintWriter printWriter = new PrintWriter(urlConnection.getOutputStream());
+
+            printWriter.print(stringWriter.toString());
+
+            printWriter.flush();
+            printWriter.close();
+            urlConnection.connect();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void update(Meal meal) {
-        // not needed in this fake db handle
+        throw new RuntimeException("Not yet implemented");
     }
 
-    public Meal getMeal(int mealId) {
-        for (DatabaseMeal meal : meals) {
-            if (meal.id == mealId) {
-                return meal;
-            }
+    public Meal getMeal(String mealId) {
+        URL url;
+        try {
+            url = new URL("http://8xw9x6dayy2cc9sl.myfritz.net/recipe/" + mealId);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
         }
 
-        throw new IllegalArgumentException("mealId " + mealId + " not registered");
+        HttpURLConnection urlConnection;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            JsonReader jsonReader = new JsonReader(new InputStreamReader(urlConnection.getInputStream()));
+            return DatabaseMeal.buildMealFromJson(jsonReader);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+            //return new DatabaseMeal[]{};
+        }
     }
 
-    public void newReceipt(LocalMeal meal) {
-        int id = (int) (Math.random() * 100000);      // Well, id calculation is a little dirty, but it's only mockup, so who cares?
-        meals.add(new DatabaseMeal(id, meal.getName()));
-        stepMap.put(id, new ArrayList<Step>(Arrays.asList(meal.getSteps())));
-        ingredientMap.put(id, new ArrayList<Ingredient>(Arrays.asList(meal.getIngredients())));
+    public void newReceipt(LocalMeal meal) throws IOException {
+        StringWriter stringWriter = new StringWriter();
+        JsonWriter jsonWriter = new JsonWriter(new BufferedWriter(stringWriter));
+        meal.writeToJson(jsonWriter);
+        jsonWriter.flush();
+
+        URL url;
+        try {
+            url = new URL("http://8xw9x6dayy2cc9sl.myfritz.net/recipe");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        HttpURLConnection urlConnection;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setRequestMethod("POST");
+
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.setRequestProperty("Content-Length", Integer.toString(stringWriter.toString().length()));
+
+
+            urlConnection.setDoOutput(true);
+
+            PrintWriter printWriter = new PrintWriter(urlConnection.getOutputStream());
+
+            printWriter.print(stringWriter.toString());
+
+            printWriter.flush();
+            printWriter.close();
+            urlConnection.connect();
+
+            urlConnection.getInputStream();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void flushDatabase() {
-        // flushing part
-        meals = new ArrayList<DatabaseMeal>();
-        ingredientMap = new HashMap<Integer, List<Ingredient>>();
-        stepMap = new HashMap<Integer, List<Step>>();
-
-        // refilling part
-        for (int mealCounter = 0; mealCounter < 20; mealCounter++) {
-            List<Ingredient> ingredient = new ArrayList<>();
-            ingredient.add(new Ingredient(200, "g", "Speck", 150, "g"));
-            ingredient.add(new Ingredient(500, "g", "Nudeln", 125, "g"));
-            ingredient.add(new Ingredient(5, "l", "Wasser", 0, "l"));
-            ingredient.add(new Ingredient(2, "Stck", "Eier", 25, "stck"));
-            ingredient.add(new Ingredient(150, "g", "Parmesan", 1500, "ml"));
-            ingredient.add(new Ingredient(150, "ml", "Sahne", 80, "ml"));
-
-            List<Step> step = new ArrayList<>();
-            for (int i = 0; i < 4; i++) {
-                step.add(new Step("Bla", "Bla bla bla", 150));
-            }
-
-            newReceipt(new LocalMeal("Carbonara", step, ingredient));
-        }
+        throw new RuntimeException("Not yet implemented");
     }
 }

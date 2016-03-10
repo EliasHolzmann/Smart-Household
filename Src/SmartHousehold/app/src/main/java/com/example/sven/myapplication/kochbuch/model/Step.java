@@ -1,5 +1,9 @@
 package com.example.sven.myapplication.kochbuch.model;
 
+import android.util.JsonReader;
+import android.util.JsonWriter;
+
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -42,5 +46,43 @@ public class Step implements Serializable {
         }
 
         return minutes + ":" + seconds;
+    }
+
+    protected static Step buildFromJson(JsonReader jsonReader) throws IOException {
+        String name = "";
+        String description = "";
+        int lengthSeconds = -1;
+        jsonReader.beginObject();
+
+        while (jsonReader.hasNext()) {
+            switch (jsonReader.nextName()) {
+                case "name":
+                    name = jsonReader.nextString();
+                    break;
+                case "description":
+                    description = jsonReader.nextString();
+                    break;
+                case "lengthSeconds":
+                    lengthSeconds = jsonReader.nextInt();
+                    break;
+                default:
+                    jsonReader.skipValue();
+            }
+        }
+
+        jsonReader.endObject();
+
+        return new Step(name, description, lengthSeconds);
+    }
+
+    public void writeToJson(JsonWriter jsonWriter) throws IOException {
+        jsonWriter.beginObject();
+        jsonWriter.name("name");
+        jsonWriter.value(title);
+        jsonWriter.name("description");
+        jsonWriter.value(description);
+        jsonWriter.name("lengthSeconds");
+        jsonWriter.value(lengthSeconds);
+        jsonWriter.endObject();
     }
 }
