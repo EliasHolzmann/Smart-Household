@@ -12,7 +12,12 @@ import android.widget.Toast;
 import com.example.sven.myapplication.R;
 import com.example.sven.myapplication.kochbuch.model.Database;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MealActivity extends AppCompatActivity {
+
+    public static final String EXTRA_INGREDIENTS = "EXTRA_INGREDIENTS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,11 @@ public class MealActivity extends AppCompatActivity {
         findViewById(R.id.mealActivityAddToCart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Not yet implemented :)", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), AddToCartActivity.class);
+
+                intent.putExtra(EXTRA_INGREDIENTS, new ArrayList(Arrays.asList(Database.getInstance().getMeal(mealId).getIngredients())));
+
+                startActivity(intent);
             }
         });
 

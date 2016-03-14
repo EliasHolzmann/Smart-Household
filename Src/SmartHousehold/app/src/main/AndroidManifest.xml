@@ -38,7 +38,8 @@
             android:label="Neuer Schritt" />
         <activity android:name=".kochbuch.CookingActivity" />
         <activity android:name=".kochbuch.MealActivity" />
-        <activity android:name=".kochbuch.NewIngredient"></activity>
+        <activity android:name=".kochbuch.NewIngredient" />
+        <activity android:name=".kochbuch.AddToCartActivity"></activity>
     </application>
 
 </manifest>

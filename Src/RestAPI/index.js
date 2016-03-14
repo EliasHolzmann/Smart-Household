@@ -30,12 +30,12 @@ const Recipe = mongoose.model('recipe', recipeSchema);
 express.use('/*', require('body-parser').json());
 
 express.use(function(req, res, next) {
-	console.log("Request");
-	console.log(req);
+//	console.log("Request");
+//	console.log(req);
 	next();
 });
 
-express.get('/recipe', function(req, res, next) {
+express.get(/^\/recipe$/, function(req, res, next) {
 	Recipe.find(function(err, recipes) {
 		assert(err == null);
 		res.json(recipes);
@@ -49,8 +49,7 @@ express.get(/\/recipe\/search\/([a-zA-Z0-9-]+)$/, function(req, res, next) {
 	});
 });
 
-express.post('/recipe', function(req, res, next) {
-	console.log(req.body);
+express.post(/^\/recipe$/, function(req, res, next) {
 	Recipe.create(req.body, function(err) {
 		if (err) {
 			res.send({success: false, error: err});
@@ -60,11 +59,9 @@ express.post('/recipe', function(req, res, next) {
 	});
 });
 
-express.get(/^\/recipe\/([0-9a-f]{24})$/, function(req, res, next) {
-	Recipe.find({'_id': req.params[0]}, function(err, recipes) {
-		assert(err == null);
-		res.send(recipes[0]);
-	});
+express.post(/^\/recipe\/flush$/, function(req, res, next) {
+	Recipe.find().remove().exec();
+	res.send({success: true, message: "Flushed database"});
 });
 
 express.post(/^\/recipe\/([0-9a-f]{24})\/add\/ingredient$/, function(req, res, next) {
@@ -80,6 +77,13 @@ express.post(/^\/recipe\/([0-9a-f]{24})\/add\/ingredient$/, function(req, res, n
 			}
 		});
 	});
+});
+
+express.get(/^\/recipe\/([0-9a-f]{24})$/, function(req, res, next) {
+      Recipe.find({'_id': req.params[0]}, function(err, recipes) {
+              assert(err == null);
+              res.send(recipes[0]);
+      });
 });
 
 express.use(function(req, res, next) {

@@ -75,7 +75,7 @@ public class Database {
 
         URL url;
         try {
-            url = new URL("http://8xw9x6dayy2cc9sl.myfritz.net/recipe");
+            url = new URL("http://8xw9x6dayy2cc9sl.myfritz.net/recipe" + (searchString.matches("[a-zA-Z0-9 ]+") ? "/search/" +  searchString : ""));
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -281,6 +281,25 @@ public class Database {
     }
 
     public void flushDatabase() {
-        throw new RuntimeException("Not yet implemented");
+
+        URL url;
+        try {
+            url = new URL("http://8xw9x6dayy2cc9sl.myfritz.net/recipe/flush");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        HttpURLConnection urlConnection;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setRequestMethod("POST");
+
+            urlConnection.connect();
+
+            urlConnection.getInputStream();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

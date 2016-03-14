@@ -98,6 +98,7 @@ public class NewReceipt extends AppCompatActivity {
             Step step = (Step) data.getSerializableExtra(EXTRA_STEP);
             stepArray.add(step);
             ((ListView) findViewById(R.id.listSteps)).setAdapter(new StepAdapter(getApplicationContext(), stepArray));
+            ListUtils.resizeListViewToMatchFullHeight(((ListView) findViewById(R.id.listSteps)));
         } else if (requestCode == REQUEST_ADD_INGREDIENT) {
             if (data == null) {
                 Toast.makeText(getApplicationContext(), "Zutat wurde NICHT gespeichert, bitte auf Speichern drücken.", Toast.LENGTH_LONG).show();
@@ -106,6 +107,7 @@ public class NewReceipt extends AppCompatActivity {
             Ingredient ingredient = (Ingredient) data.getSerializableExtra(EXTRA_INGREDIENT);
             ingredientArray.add(ingredient);
             ((ListView) findViewById(R.id.listIngredients)).setAdapter(new IngredientAdapter(getApplicationContext(), ingredientArray));
+            ListUtils.resizeListViewToMatchFullHeight(((ListView) findViewById(R.id.listIngredients)));
         }
     }
 

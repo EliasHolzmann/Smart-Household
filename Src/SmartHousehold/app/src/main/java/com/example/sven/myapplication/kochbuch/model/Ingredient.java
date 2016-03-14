@@ -39,7 +39,7 @@ public class Ingredient implements Serializable {
                 case "amount":
                     amount = jsonReader.nextInt();
                     break;
-                case "lengthSeconds":
+                case "amountType":
                     amountType = jsonReader.nextString();
                     break;
                 case "price":
