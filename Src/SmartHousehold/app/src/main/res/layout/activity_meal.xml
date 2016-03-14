@@ -7,7 +7,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.sven.myapplication.kochbuch.MealActivity">
+    android:background="@drawable/block"
+    tools:context="com.example.sven.myapplication.kochbuch.MealActivity"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
 
     <TextView
         android:layout_width="match_parent"
@@ -16,7 +19,8 @@
         android:text="Zutaten:"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/textView5" />
+        android:id="@+id/textView5"
+        android:layout_marginTop="40px" />
 
     <Button
         android:layout_width="match_parent"

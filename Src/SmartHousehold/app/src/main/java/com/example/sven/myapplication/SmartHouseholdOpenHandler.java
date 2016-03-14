@@ -31,7 +31,7 @@ public class SmartHouseholdOpenHandler extends SQLiteOpenHelper {
     private static final String TABLE_LISTEN_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + BEZEICHNUNG + " VARCHAR(200));";
     private static final String TABLE_LISTEN_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
-    SmartHouseholdOpenHandler(Context context){
+    public SmartHouseholdOpenHandler(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

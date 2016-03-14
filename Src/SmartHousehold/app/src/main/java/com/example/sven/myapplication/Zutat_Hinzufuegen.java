@@ -76,7 +76,6 @@ public class Zutat_Hinzufuegen extends AppCompatActivity {
 
                 Spinner spinnermenge = (Spinner) findViewById(R.id.spinner);
                 Spinner spinnerpreis = (Spinner) findViewById(R.id.spinner2);
-
                 String mengeString = menge.getText().toString();
 
                 String preisString = preis.getText().toString();

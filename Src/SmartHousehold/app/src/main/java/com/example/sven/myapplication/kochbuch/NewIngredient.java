@@ -3,6 +3,7 @@ package com.example.sven.myapplication.kochbuch;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -26,6 +27,12 @@ public class NewIngredient extends AppCompatActivity {
         };
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_ingredient);
+
+        setTitle("Zutat hinzufügen");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         ((Spinner) findViewById(R.id.newIngredientAmountType)).setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types));
         ((Spinner) findViewById(R.id.newIngredientPriceType)).setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types));
 
@@ -48,5 +55,15 @@ public class NewIngredient extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

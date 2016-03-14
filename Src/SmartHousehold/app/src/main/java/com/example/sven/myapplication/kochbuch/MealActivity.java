@@ -3,6 +3,7 @@ package com.example.sven.myapplication.kochbuch;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -23,6 +24,9 @@ public class MealActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         final String mealId = getIntent().getStringExtra(CookingActivity.EXTRA_MEAL_ID);
         if (mealId == null) {
@@ -54,5 +58,15 @@ public class MealActivity extends AppCompatActivity {
         });
 
         ((ListView) findViewById(R.id.mealActivityIngredientsList)).setAdapter(new IngredientAdapter(getApplicationContext(), Database.getInstance().getMeal(mealId).getIngredients()));
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

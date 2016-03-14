@@ -8,12 +8,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/block"
     tools:context="com.example.sven.myapplication.kochbuch.NewStep"
-    android:scrollbars="vertical">
+    android:scrollbars="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
     <ScrollView
         android:layout_above="@+id/newStepSaveButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_marginTop="40px">
         <LinearLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"

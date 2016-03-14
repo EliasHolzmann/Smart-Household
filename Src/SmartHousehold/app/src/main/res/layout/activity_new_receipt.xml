@@ -2,13 +2,17 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:background="@drawable/block">
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@+id/newReceiptSave">
+    android:layout_above="@+id/newReceiptSave"
+    android:layout_marginTop="40px">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
