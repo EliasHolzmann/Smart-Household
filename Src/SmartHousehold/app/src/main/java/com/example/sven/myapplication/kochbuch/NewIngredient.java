@@ -14,6 +14,9 @@ import com.example.sven.myapplication.R;
 import com.example.sven.myapplication.kochbuch.model.Ingredient;
 import com.example.sven.myapplication.kochbuch.model.Step;
 
+/**
+ * This activity can be used to add a new ingredient. When done, it will deliver an intent back to its caller with extra NewReceipt.EXTRA_INGREDIENT.
+ */
 public class NewIngredient extends AppCompatActivity {
 
     @Override
@@ -46,6 +49,12 @@ public class NewIngredient extends AppCompatActivity {
                 String priceType = ((Spinner) findViewById(R.id.newIngredientPriceType)).getSelectedItem().toString();
 
                 int amount = Integer.parseInt(amountStr);
+                /* this is a little bit hacky.
+                 * We parse the number as Double and multiply by 100 to get rid of the comma.
+                 * Because of floating point rounding errors, we add 0.5 and cast to int.
+                 * Therefore, if the rounding error is smaller than 0.5, we get correct results.
+                 * For big numbers, this might be buggy.
+                 */
                 int price = (int) (Double.parseDouble(amountStr) * 100 + 0.5);
 
                 Intent intent = new Intent();

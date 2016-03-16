@@ -18,16 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by elias on 03.03.16.
- */
+  * In this singleton, all network communication is happening.
+  */
 public class Database {
-/*
- * Todo list
- * add ability to add new/edit steps/ingredients in newReceipt activity
- * remove reference to mealId 0 (currently breaks on Database.flushDatabase()
- * talk with Sven about interface for communication with cart
- * optional: make saved receipts editable
- */
 
     private List<DatabaseMeal> meals = new ArrayList<DatabaseMeal>();
     private Map<String, List<Ingredient>> ingredientMap = new HashMap<String, List<Ingredient>>();
@@ -44,6 +37,10 @@ public class Database {
         StrictMode.setThreadPolicy(policy);
     }
 
+    /**
+     * Returns all meals known to the database.
+     * @return all meals known to the database.
+     */
     public DatabaseMeal[] getMeals() {
         URL url;
         try {
@@ -71,6 +68,12 @@ public class Database {
         }
     }
 
+    /**
+     * Returns all meals which match a specified string.
+     * If the string contains characters which are neither alphanumeric nor a space, the result will be the same as getMeals().
+     * @param searchString the string to be searched for
+     * @return array of all meals which names contain searchString
+     */
     public DatabaseMeal[] getMeals(String searchString) {
 
         URL url;
@@ -99,6 +102,11 @@ public class Database {
         }
     }
 
+    /**
+     * Returns all steps which are part of the given meal
+     * @param meal the meal which steps should be loaded
+     * @return the steps which where loaded from the database
+     */
     protected Step[] getSteps(DatabaseMeal meal) {
 
         URL url;
@@ -138,6 +146,11 @@ public class Database {
         }
     }
 
+    /**
+     * Returns all ingredients which are part of the given meal
+     * @param meal the meal which ingredients should be loaded
+     * @return the ingredients which where loaded from the database
+     */
     protected Ingredient[] getIngredients(DatabaseMeal meal) {
 
         URL url;
@@ -177,49 +190,11 @@ public class Database {
         }
     }
 
-    protected void addStep(DatabaseMeal meal, Step step) {
-        throw new RuntimeException("Not yet implemented");
-    }
-
-    protected void addIngredient(DatabaseMeal meal, Ingredient ingredient) throws IOException {
-        StringWriter stringWriter = new StringWriter();
-        JsonWriter jsonWriter = new JsonWriter(new BufferedWriter(stringWriter));
-        ingredient.writeToJson(jsonWriter);
-        jsonWriter.flush();
-
-
-        URL url;
-        try {
-            url = new URL("http://8xw9x6dayy2cc9sl.myfritz.net/recipe/" + meal.id + "/add/ingredient");
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-
-        HttpURLConnection urlConnection;
-        try {
-            urlConnection = (HttpURLConnection) url.openConnection();
-
-            urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
-
-            urlConnection.setDoOutput(true);
-            urlConnection.setChunkedStreamingMode(0);
-
-            PrintWriter printWriter = new PrintWriter(urlConnection.getOutputStream());
-
-            printWriter.print(stringWriter.toString());
-
-            printWriter.flush();
-            printWriter.close();
-            urlConnection.connect();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    protected void update(Meal meal) {
-        throw new RuntimeException("Not yet implemented");
-    }
-
+    /**
+     * Returns the meal which has a specific meal ID.
+     * @param mealId the meal ID
+     * @return the meal which has a specific meal ID
+     */
     public Meal getMeal(String mealId) {
         URL url;
         try {
@@ -241,6 +216,10 @@ public class Database {
         }
     }
 
+    /**
+     * Adds a new meal to the database
+     * @param meal the new (Local-)Meal
+     */
     public void newReceipt(LocalMeal meal) throws IOException {
         StringWriter stringWriter = new StringWriter();
         JsonWriter jsonWriter = new JsonWriter(new BufferedWriter(stringWriter));
@@ -280,6 +259,9 @@ public class Database {
         }
     }
 
+    /**
+     * Flushes the complete database. Helpful for testing purposes.
+     */
     public void flushDatabase() {
 
         URL url;

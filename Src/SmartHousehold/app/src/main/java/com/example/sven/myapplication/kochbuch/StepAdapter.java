@@ -13,7 +13,7 @@ import com.example.sven.myapplication.kochbuch.model.Step;
 import java.util.List;
 
 /**
- * Created by elias on 26.02.16.
+ * This ArrayAdapter offers an Adapter for usage in ListViews with a item view developed specifically for steps.
  */
 public class StepAdapter extends ArrayAdapter<Step> {
     public StepAdapter(Context context, Step[] meal) {

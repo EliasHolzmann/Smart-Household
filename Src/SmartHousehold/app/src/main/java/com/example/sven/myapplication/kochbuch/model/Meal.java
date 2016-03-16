@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * Created by elias on 26.02.16.
+ * Represents an abstract meal.
+ * This class is implemented by LocalMeal as well as DatabaseMeal.
  */
 public abstract class Meal implements Serializable {
     protected String name;
@@ -27,8 +28,18 @@ public abstract class Meal implements Serializable {
     public abstract Step[] getSteps();
     public abstract void addStep(Step step);
     public abstract Ingredient[] getIngredients();
+
+    /**
+     * Adds an ingredient at the end of the ingredient list.
+     * @param ingredient the ingredient which should be added
+     * @throws IOException iff there is a problem with networking
+     */
     public abstract void addIngredient(Ingredient ingredient) throws IOException;
 
+    /**
+     * Writes this object to a JsonWriter.
+     * @param jsonWriter the JsonWriter which will receive this JSON object
+     */
     public void writeToJson(JsonWriter jsonWriter) throws IOException {
         jsonWriter.beginObject();
 

@@ -16,6 +16,15 @@ import com.example.sven.myapplication.kochbuch.model.Database;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This activity is invoked by Kochbuch activity. It represents one specific meal.
+ * Displayed are all ingredients and a button to add those ingredients to the shopping cart.
+ * At the bottom, there is one button to start cooking which launches CookingActivity.
+ * This activity gets a meal ID via CookingActivity.EXTRA_MEAL_ID. This meal is the meal that is represented here.
+ *
+ * NOTE: This activity doesn't work with abstract Meal objects because it needs an ID field.
+ * It is therefore designed for DatabaseMeals.
+ */
 public class MealActivity extends AppCompatActivity {
 
     public static final String EXTRA_INGREDIENTS = "EXTRA_INGREDIENTS";

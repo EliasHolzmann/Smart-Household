@@ -15,14 +15,39 @@ import com.example.sven.myapplication.kochbuch.model.Database;
 import com.example.sven.myapplication.kochbuch.model.Meal;
 import com.example.sven.myapplication.kochbuch.model.Step;
 
+/**
+ * This activity represents a meal in an interactive way. It is used for the process of cooking.
+ * The meal ID must be given in the intent in an extra named EXTA_MEAL_ID.
+ * The activity features an interface with the current step, an step description and estimated time. There is also a timer.
+ * At the bottom, the previous or next step can be selected.
+ */
 public class CookingActivity extends AppCompatActivity {
     public static final String EXTRA_MEAL_ID = "EXTRA_MEAL_ID";
+
+    /**
+     * Key for the savedInstance bundle. If ARG_CHRONO_RUNNING, this represents the chronometer base. Else, this represents current value of the chronometer.
+     */
     private String ARG_CHRONO_BASE_OR_CURRENT_VALUE = "ChronometerBase";
+    /**
+     * Key for the savedInstance bundle. If true, the timer is currently running. Else, the timer is halted.
+     */
     private String ARG_CHRONO_RUNNING = "ChronometerRunning";
+    /**
+     * Iff true, chronometer is running.
+     */
     private boolean isChronometerRunning = false;
+    /**
+     * Iff !isChronometerRunning, this represents the current chronometer count. Else, this value is meaningless.
+     */
     private long chronometerCountMillis = 0;
 
+    /**
+     * ID of step currently shown. When changed, you probably want to call loadStep() afterwards.
+     */
     private int stepId;
+    /**
+     * Array of all the steps.
+     */
     private Step steps[];
 
     @Override
@@ -71,7 +96,7 @@ public class CookingActivity extends AppCompatActivity {
             }
         });
 
-            final Chronometer timer = ((Chronometer) findViewById(R.id.MealActivityTimer));
+        final Chronometer timer = ((Chronometer) findViewById(R.id.MealActivityTimer));
         if (savedInstanceState != null) {
             long chronoBase = savedInstanceState.getLong(ARG_CHRONO_BASE_OR_CURRENT_VALUE);
             boolean chronoRunning = savedInstanceState.getBoolean(ARG_CHRONO_RUNNING);
@@ -112,6 +137,9 @@ public class CookingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Used to load a new step. Should be called when this.stepId is changed.
+     */
     private void loadStep() {
         Step step = steps[stepId];
 

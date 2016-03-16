@@ -13,7 +13,7 @@ import com.example.sven.myapplication.kochbuch.model.Ingredient;
 import java.util.List;
 
 /**
- * Created by elias on 26.02.16.
+ * This ArrayAdapter offers an Adapter for usage in ListViews with a item view developed specifically for steps.
  */
 public class IngredientAdapter extends ArrayAdapter<Ingredient> {
 

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by elias on 26.02.16.
+ * This MealAdapter offers an Adapter for usage in ListViews with a item view developed specifically for meal objects.
  */
 public class MealAdapter extends ArrayAdapter<DatabaseMeal> {
 

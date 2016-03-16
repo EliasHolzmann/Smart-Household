@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * Created by elias on 26.02.16.
+ * Represents a meal which was read from the database. This object saves the meal ID, so it can be exactly identified.
  */
 public class DatabaseMeal extends Meal implements Serializable {
     protected String id;
@@ -16,6 +16,13 @@ public class DatabaseMeal extends Meal implements Serializable {
         this.id = id;
     }
 
+
+    /**
+     * Reads a meal from a JSON object which was received form the RESTed API.
+     * The JsonReader cursor should be BEFORE BEGIN_OBJECT
+     * @param jsonReader the JsonReader object which contains the Meal object
+     * @return A new meal which was constructed with the help of the JsonReader object
+     */
     protected static DatabaseMeal buildMealFromJson(JsonReader jsonReader) throws IOException {
         String id = null;
         String name = "";

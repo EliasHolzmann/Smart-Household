@@ -11,6 +11,9 @@ import android.widget.EditText;
 import com.example.sven.myapplication.R;
 import com.example.sven.myapplication.kochbuch.model.Step;
 
+/**
+ * This activity can be used to add a new step. When done, it will deliver an intent back to its caller with extra NewReceipt.EXTRA_STEP.
+ */
 public class NewStep extends AppCompatActivity {
 
     @Override

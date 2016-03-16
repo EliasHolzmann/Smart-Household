@@ -22,14 +22,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This activity is used to add new Meal objects. Adding of steps and ingredients is done by sub-activities NewStep and NewIngredient respectively.
+ * On finish, this activity returns to the calling activity via Intent extra Kochbuch.EXTRA_MEAL.
+ */
 public class NewReceipt extends AppCompatActivity {
-    public static final String EXTRA_INGREDIENT = "EXTRA_INGREDIENT";
-    private static final int REQUEST_ADD_INGREDIENT = 2;
-    private List<Step> stepArray;
-    private List<Ingredient> ingredientArray;
-
-    public static final int REQUEST_ADD_STEP = 1;
     public static final String EXTRA_STEP = "EXTRA_STEP";
+    public static final String EXTRA_INGREDIENT = "EXTRA_INGREDIENT";
+    public static final int REQUEST_ADD_STEP = 1;
+    private static final int REQUEST_ADD_INGREDIENT = 2;
+
+    /**
+     * List of all the steps the new receipt.
+     * When this list is altered, don't forget to reload the ListAdapter and resize the ListView!
+     */
+    private List<Step> stepArray;
+    /**
+     * List of all the steps the new receipt.
+     * When this list is altered, don't forget to reload the ListAdapter and resize the ListView!
+     */
+    private List<Ingredient> ingredientArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +127,12 @@ public class NewReceipt extends AppCompatActivity {
     }
 
     public static class ListUtils {
+
+        /**
+         * When called, resizes the ListView to match the content size. Expressed in another way, this method chooses the minimal height which results in the ListView being unscrollable.
+         * This method is helpful in case of multiple ListViews nested inside of one big ScrollView. Please note that by using this method, there is no more lazy loading for Items.
+         * @param listView the listView which should be resized
+         */
         public static void resizeListViewToMatchFullHeight(ListView listView) {
             ListAdapter listAdapter = listView.getAdapter();
             if (listAdapter == null) {

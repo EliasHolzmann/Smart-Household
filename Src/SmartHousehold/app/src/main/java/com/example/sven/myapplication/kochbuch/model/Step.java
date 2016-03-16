@@ -7,12 +7,13 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * Created by elias on 28.02.16.
+ * Represents a step in a meal.
+ * This class is used for LocalMeal as well as DatabaseMeal.
  */
 public class Step implements Serializable {
     public final String title;
     public final String description;
-    public final int lengthSeconds;
+    public final int lengthSeconds;   // -1 represents no length given
 
     public Step(String title) {
         this.title = title;
@@ -48,6 +49,12 @@ public class Step implements Serializable {
         return minutes + ":" + seconds;
     }
 
+    /**
+     * Reads a step from a JSON object which was received form the RESTed API.
+     * The JsonReader cursor should be BEFORE BEGIN_OBJECT
+     * @param jsonReader the JsonReader object which contains the Step object
+     * @return A new step which was constructed with the help of the JsonReader object
+     */
     protected static Step buildFromJson(JsonReader jsonReader) throws IOException {
         String name = "";
         String description = "";
@@ -75,6 +82,10 @@ public class Step implements Serializable {
         return new Step(name, description, lengthSeconds);
     }
 
+    /**
+     * Writes this object to a JsonWriter.
+     * @param jsonWriter the JsonWriter which will receive this JSON object
+     */
     public void writeToJson(JsonWriter jsonWriter) throws IOException {
         jsonWriter.beginObject();
         jsonWriter.name("name");

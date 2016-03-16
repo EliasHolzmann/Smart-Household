@@ -15,6 +15,9 @@ import com.example.sven.myapplication.kochbuch.model.Ingredient;
 
 import java.util.List;
 
+/**
+ * This activity is the interface between a Recipe and the Shopping Cart. It is used to add the ingredients of a recipe to the shopping cart.
+ */
 public class AddToCartActivity extends AppCompatActivity {
 
     private SmartHouseholdOpenHandler dbHandler;

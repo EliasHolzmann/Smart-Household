@@ -27,14 +27,21 @@ var recipeSchema = new mongoose.Schema({
 
 const Recipe = mongoose.model('recipe', recipeSchema);
 
+// parses json request body
 express.use('/*', require('body-parser').json());
 
+// echoes every request object. Helpful for debugging.
 express.use(function(req, res, next) {
 //	console.log("Request");
 //	console.log(req);
 	next();
 });
 
+/*
+ * GET /recipe
+ * 
+ * Returns an array of all recipes saved here.
+ */
 express.get(/^\/recipe$/, function(req, res, next) {
 	Recipe.find(function(err, recipes) {
 		assert(err == null);
@@ -42,6 +49,11 @@ express.get(/^\/recipe$/, function(req, res, next) {
 	});
 });
 
+/*
+ * GET /recipe/search/[a-zA-Z0-9-]+
+ *
+ * Returns an array of all recipes matching the regex.
+ */
 express.get(/\/recipe\/search\/([a-zA-Z0-9-]+)$/, function(req, res, next) {
 	Recipe.find({name: new RegExp(req.params[0], 'i')}, function(err, recipes) {
 		assert(err == null);
@@ -49,6 +61,11 @@ express.get(/\/recipe\/search\/([a-zA-Z0-9-]+)$/, function(req, res, next) {
 	});
 });
 
+/*
+ * POST /recipe
+ *
+ * Adds a new recipe to the database.
+ */
 express.post(/^\/recipe$/, function(req, res, next) {
 	Recipe.create(req.body, function(err) {
 		if (err) {
@@ -59,11 +76,21 @@ express.post(/^\/recipe$/, function(req, res, next) {
 	});
 });
 
+/*
+ * POST /recipe/flush
+ * 
+ * Flushes database, removes all saved recipes.
+ */
 express.post(/^\/recipe\/flush$/, function(req, res, next) {
 	Recipe.find().remove().exec();
 	res.send({success: true, message: "Flushed database"});
 });
 
+/*
+ * POST /recipe/[0-9a-f]{24}/add/ingredient
+ *
+ * Adds the ingredient given via JSON to the meal specified in the regex.
+ */
 express.post(/^\/recipe\/([0-9a-f]{24})\/add\/ingredient$/, function(req, res, next) {
 	Recipe.find({'_id': req.params[0]}, function(err, recipes) {
                 assert(err == null);
@@ -79,6 +106,11 @@ express.post(/^\/recipe\/([0-9a-f]{24})\/add\/ingredient$/, function(req, res, n
 	});
 });
 
+/*
+ * GET /recipe/[0-9a-f]{24}
+ * 
+ * Returns the meal specified with this regex.
+ */
 express.get(/^\/recipe\/([0-9a-f]{24})$/, function(req, res, next) {
       Recipe.find({'_id': req.params[0]}, function(err, recipes) {
               assert(err == null);
@@ -86,6 +118,7 @@ express.get(/^\/recipe\/([0-9a-f]{24})$/, function(req, res, next) {
       });
 });
 
+// Returns request objects for all unhandled objects. Helpful for debugging
 express.use(function(req, res, next) {
 	console.log("Unhandled");
 	console.log(req);

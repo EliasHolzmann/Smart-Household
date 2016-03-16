@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Main activity of cooking module. Has a ListView of all meals and a button for adding new meals.
+ * Long-pressing the button will reset the database (useful for testing purposes).
+ */
 public class Kochbuch extends AppCompatActivity {
     private List<DatabaseMeal> meals = new ArrayList<>();
 
@@ -80,6 +84,9 @@ public class Kochbuch extends AppCompatActivity {
         reloadMealsListView();
     }
 
+    /**
+     * On change of this.meals, this method must be called to reload the ListView.
+     */
     private void reloadMealsListView() {
         if (((SearchView) findViewById(R.id.receiptSearch)).getQuery().length() == 0) {
             meals.clear();
@@ -89,6 +96,7 @@ public class Kochbuch extends AppCompatActivity {
             meals.addAll(Arrays.asList(Database.getInstance().getMeals(((SearchView) findViewById(R.id.receiptSearch)).getQuery().toString())));
         }
         ArrayAdapter mealsAdapter = new MealAdapter(getApplicationContext(), meals);
+        // NOTE: ListView.invalidate() will NOT do what you want!!!
         ((ListView) findViewById(R.id.meals)).setAdapter(mealsAdapter);
     }
 

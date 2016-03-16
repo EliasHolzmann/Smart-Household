@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * Created by elias on 28.02.16.
+ * Represents an abstract meal.
+ * This class is implemented by LocalMeal as well as DatabaseMeal.
  */
 public class Ingredient implements Serializable {
     public final int amount;
@@ -23,6 +24,12 @@ public class Ingredient implements Serializable {
         this.priceType = priceType;
     }
 
+    /**
+     * Reads an ingredient from a JSON object which was received form the RESTed API.
+     * The JsonReader cursor should be BEFORE BEGIN_OBJECT
+     * @param jsonReader the JsonReader object which contains the Ingredient object
+     * @return A new ingredient which was constructed with the help of the JsonReader object
+     */
     protected static Ingredient buildFromJson(JsonReader jsonReader) throws IOException {
         String name = "";
         int amount = 0;
@@ -58,6 +65,10 @@ public class Ingredient implements Serializable {
         return new Ingredient(amount, amountType, name, price, priceType);
     }
 
+    /**
+     * Writes this object to a JsonWriter.
+     * @param jsonWriter the JsonWriter which will receive this JSON object
+     */
     public void writeToJson(JsonWriter jsonWriter) throws IOException {
         jsonWriter.beginObject();
         jsonWriter.name("name");

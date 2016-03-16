@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by elias on 26.02.16.
+ * Represents a meal which is in the process of being created. It can be written to the database by
+ * the Database singleton.
  */
 public class LocalMeal extends Meal implements Serializable {
     List<Step> steps = new ArrayList<Step>();
